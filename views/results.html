@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results - Online Voting System</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="navbar">
+      <div class="navbar-brand">
+        <h1>🗳️ Online Voting System</h1>
+      </div>
+      <div class="navbar-menu">
+        <a href="/" class="nav-link">Home</a>
+        <button class="btn btn-logout" id="logoutBtn" style="display: none;">Logout</button>
+        <a href="/login.html" class="nav-link" id="loginLink">Login</a>
+      </div>
+    </div>
+
+    <div class="results-container">
+      <h2>Election Results</h2>
+
+      <div id="loadingSpinner" class="spinner">
+        <div class="spinner-border"></div>
+        <p>Loading results...</p>
+      </div>
+
+      <div id="noResults" class="alert alert-info" style="display: none;">
+        ℹ️ No votes have been cast yet. Please check back later.
+      </div>
+
+      <div id="resultsContent" style="display: none;">
+        <div class="results-header">
+          <h3>Total Votes Cast: <span id="totalVotesCount">0</span></h3>
+        </div>
+
+        <div class="winner-section" id="winnerSection" style="display: none;">
+          <h3>🏆 Election Winner</h3>
+          <div class="winner-info">
+            <p class="winner-name" id="winnerCandidateName"></p>
+            <p class="winner-party" id="winnerCandidateParty"></p>
+            <div class="winner-stats">
+              <p>Votes: <strong id="winnerCandidateVotes"></strong></p>
+              <p>Percentage: <strong id="winnerCandidatePercentage"></strong></p>
+            </div>
+          </div>
+        </div>
+
+        <h3>Detailed Results</h3>
+        <div class="results-list" id="resultsList">
+          <!-- Results will be displayed here -->
+        </div>
+      </div>
+
+      <div id="errorContainer" class="alert alert-danger" style="display: none;"></div>
+    </div>
+
+    <div class="footer">
+      <p>&copy; 2026 Online Voting System. All rights reserved.</p>
+    </div>
+  </div>
+
+    <script src="/js/main.js"></script>
+  <script src="/js/results.js"></script>
+</body>
+</html>

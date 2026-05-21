@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voter Dashboard - Online Voting System</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="navbar">
+      <div class="navbar-brand">
+        <h1>🗳️ Online Voting System</h1>
+      </div>
+      <div class="navbar-menu">
+        <span class="nav-link">Welcome, <strong id="userName"></strong></span>
+        <button class="btn btn-logout" id="logoutBtn">Logout</button>
+      </div>
+    </div>
+
+    <div class="dashboard-container">
+      <div class="dashboard-header">
+        <h2>Voter Dashboard</h2>
+        <div class="user-info">
+          <p>Voter ID: <strong id="voterID"></strong></p>
+          <p>Status: <span id="voteStatus" class="badge badge-pending">Not Voted</span></p>
+        </div>
+      </div>
+
+      <div id="votingClosed" class="alert alert-warning" style="display: none;">
+        ⚠️ Voting is currently closed. Please check back later.
+      </div>
+
+      <div id="alreadyVoted" class="alert alert-success" style="display: none;">
+        ✓ You have already cast your vote. Thank you for voting!
+      </div>
+
+      <div id="votingOpen" style="display: none;">
+        <div class="candidates-section">
+          <h3>Select Your Candidate</h3>
+          <p class="candidates-subtitle">Click on a candidate to vote</p>
+          <div class="candidates-grid" id="candidatesGrid">
+            <!-- Candidates will be loaded here by JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <div id="loadingSpinner" class="spinner" style="display: none;">
+        <div class="spinner-border"></div>
+        <p>Loading candidates...</p>
+      </div>
+
+      <div id="errorContainer" class="alert alert-danger" style="display: none;"></div>
+
+      <div class="message" id="successMessage" style="display: none;"></div>
+    </div>
+
+    <div class="footer">
+      <p>&copy; 2026 Online Voting System. All rights reserved.</p>
+    </div>
+  </div>
+
+  <!-- Modal for vote confirmation -->
+  <div id="confirmVoteModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Confirm Your Vote</h3>
+        <button class="modal-close" id="closeModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>You are about to vote for:</p>
+        <h4 id="selectedCandidateName"></h4>
+        <p class="modal-subtitle">Party: <span id="selectedCandidateParty"></span></p>
+        <p class="modal-warning">⚠️ This action cannot be undone. Are you sure?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelVoteBtn">Cancel</button>
+        <button class="btn btn-primary" id="confirmVoteBtn">Confirm Vote</button>
+      </div>
+    </div>
+  </div>
+
+    <script src="/js/main.js"></script>
+  <script src="/js/voter-dashboard.js"></script>
+</body>
+</html>

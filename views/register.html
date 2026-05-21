@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Online Voting System</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="navbar">
+      <div class="navbar-brand">
+        <h1>🗳️ Online Voting System</h1>
+      </div>
+      <div class="navbar-menu">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/register.html" class="nav-link active">Register</a>
+        <a href="/login.html" class="nav-link">Login</a>
+      </div>
+    </div>
+
+    <div class="form-container">
+      <div class="form-box">
+        <h2>Voter Registration</h2>
+        <p class="form-subtitle">Create your account to vote</p>
+
+        <form id="registerForm">
+          <div class="form-group">
+            <label for="voterID">Voter ID *</label>
+            <input 
+              type="text" 
+              id="voterID" 
+              name="voterID" 
+              placeholder="Enter your Voter ID" 
+              required
+            >
+            <small class="error-message" id="voterIDError"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              placeholder="Enter your full name" 
+              required
+            >
+            <small class="error-message" id="nameError"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              placeholder="Enter your email" 
+              required
+            >
+            <small class="error-message" id="emailError"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="dateOfBirth">Date of Birth *</label>
+            <input 
+              type="date" 
+              id="dateOfBirth" 
+              name="dateOfBirth" 
+              required
+            >
+            <small class="error-message" id="dobError"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password *</label>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              placeholder="Enter password (min 6 characters)" 
+              required
+            >
+            <small class="error-message" id="passwordError"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password *</label>
+            <input 
+              type="password" 
+              id="confirmPassword" 
+              name="confirmPassword" 
+              placeholder="Confirm your password" 
+              required
+            >
+            <small class="error-message" id="confirmPasswordError"></small>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-full">
+              <span id="submitButtonText">Register</span>
+              <span id="submitButtonLoader" style="display: none;">Processing...</span>
+            </button>
+          </div>
+
+          <div class="message" id="successMessage" style="display: none;"></div>
+          <div class="message error" id="errorMessage" style="display: none;"></div>
+        </form>
+
+        <p class="form-footer">
+          Already have an account? <a href="/login.html">Login here</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>&copy; 2026 Online Voting System. All rights reserved.</p>
+    </div>
+  </div>
+  <script src="/js/main.js"></script>
+  <script src="/js/register.js"></script>
+</body>
+</html>

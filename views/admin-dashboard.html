@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Online Voting System</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="navbar">
+      <div class="navbar-brand">
+        <h1>🗳️ Online Voting System - Admin</h1>
+      </div>
+      <div class="navbar-menu">
+        <span class="nav-link">Admin: <strong id="adminName"></strong></span>
+        <button class="btn btn-logout" id="logoutBtn">Logout</button>
+      </div>
+    </div>
+
+    <div class="dashboard-container">
+      <div class="admin-tabs">
+        <button class="tab-btn active" data-tab="overview">Overview</button>
+        <button class="tab-btn" data-tab="candidates">Candidates</button>
+        <button class="tab-btn" data-tab="voting">Voting Control</button>
+        <button class="tab-btn" data-tab="results">Results</button>
+        <button class="tab-btn" data-tab="history">History</button>
+      </div>
+
+      <!-- Overview Tab -->
+      <div id="overview" class="tab-content active">
+        <h2>Dashboard Overview</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-info">
+              <h4>Total Voters</h4>
+              <p class="stat-number" id="totalVoters">0</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🎤</div>
+            <div class="stat-info">
+              <h4>Total Candidates</h4>
+              <p class="stat-number" id="totalCandidates">0</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">✔️</div>
+            <div class="stat-info">
+              <h4>Total Votes</h4>
+              <p class="stat-number" id="totalVotes">0</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🔄</div>
+            <div class="stat-info">
+              <h4>Voting Status</h4>
+              <p class="stat-status" id="votingStatus">Closed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Candidates Tab -->
+      <div id="candidates" class="tab-content">
+        <h2>Manage Candidates</h2>
+        
+        <div class="add-candidate-section">
+          <h3>Add New Candidate</h3>
+          <form id="addCandidateForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="candidateName">Candidate Name *</label>
+                <input type="text" id="candidateName" placeholder="Enter candidate name" required>
+              </div>
+              <div class="form-group">
+                <label for="candidateParty">Party Name *</label>
+                <input type="text" id="candidateParty" placeholder="Enter party name" required>
+              </div>
+              <div class="form-group">
+                <label for="candidateSymbol">Symbol (Optional)</label>
+                <input type="text" id="candidateSymbol" placeholder="e.g., 🔵" value="🔵">
+              </div>
+              <button type="submit" class="btn btn-primary">Add Candidate</button>
+            </div>
+            <div class="message" id="addCandidateSuccess" style="display: none;"></div>
+            <div class="message error" id="addCandidateError" style="display: none;"></div>
+          </form>
+        </div>
+
+        <h3>Active Candidates</h3>
+        <div class="candidates-table-container">
+          <table class="candidates-table" id="candidatesTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Party</th>
+                <th>Symbol</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="candidatesTableBody">
+              <!-- Candidates will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Voting Control Tab -->
+      <div id="voting" class="tab-content">
+        <h2>Voting Control</h2>
+        <div class="voting-control-section">
+          <div class="control-card">
+            <h3>Voting Status</h3>
+            <p>Current Status: <span id="currentVotingStatus" class="badge badge-closed">Closed</span></p>
+            <p class="voting-description">Use the buttons below to open or close the voting session</p>
+            
+            <div class="control-buttons">
+              <button class="btn btn-success" id="openVotingBtn">🔓 Open Voting</button>
+              <button class="btn btn-danger" id="closeVotingBtn">🔒 Close Voting</button>
+            </div>
+            
+            <div class="message" id="votingControlSuccess" style="display: none;"></div>
+            <div class="message error" id="votingControlError" style="display: none;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Tab -->
+      <div id="results" class="tab-content">
+        <h2>Election Results</h2>
+        
+        <div class="results-section">
+          <div id="noResults" class="alert alert-info">
+            No votes cast yet
+          </div>
+          
+          <div id="resultsContainer" style="display: none;">
+            <div class="results-summary">
+              <h3>Overall Summary</h3>
+              <p>Total Votes: <strong id="resultsTotalVotes">0</strong></p>
+              <div id="winnerCard" class="winner-card" style="display: none;">
+                <h4>🏆 Winner</h4>
+                <p class="winner-name" id="winnerName"></p>
+                <p class="winner-party" id="winnerParty"></p>
+                <p class="winner-votes" id="winnerVotes"></p>
+              </div>
+            </div>
+
+            <h3>Detailed Results</h3>
+            <div class="results-chart" id="resultsChart">
+              <!-- Results will be displayed here -->
+            </div>
+          </div>
+        </div>
+
+        <div class="export-section">
+          <button class="btn btn-primary" id="exportPdfBtn">📄 Export as PDF</button>
+          <div class="message" id="exportSuccess" style="display: none;"></div>
+          <div class="message error" id="exportError" style="display: none;"></div>
+        </div>
+      </div>
+
+      <!-- History Tab -->
+      <div id="history" class="tab-content">
+        <h2>Election History (Last 5 Elections)</h2>
+        <div class="history-section">
+          <div id="noHistory" class="alert alert-info">
+            No election history available
+          </div>
+          <div id="historyContainer" style="display: none;">
+            <div class="history-list" id="historyList">
+              <!-- Elections will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>&copy; 2026 Online Voting System. All rights reserved.</p>
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/admin-dashboard.js"></script>
+</body>
+</html>
