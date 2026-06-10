@@ -4,7 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 const session = require('express-session');
-const MongoStore = require('connect-mongo').default;
+const MongoStore = require('connect-mongo');
 
 // Load environment variables
 dotenv.config();
@@ -38,36 +38,7 @@ app.use(cors({
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
-// Session configuration (TC17: Session management)
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: new MongoStore({
-      mongoUrl: process.env.MONGODB_URI,
-      touchAfter: 24 * 3600,
-    }),
-    cookie: {
-      secure: process.env.NODE_ENV === 'production', // true in production
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
-      sameSite: 'lax',
-    },
-  })
-);
-
-// Static files
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'views')));
-
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/voting', votingRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/results', resultsRoutes);
-
-// Security middleware - TC19: Prevent SQL Injection
+// Security middleware - TC19: Prevent SQL Injection (Moved up to protect routes)
 app.use((req, res, next) => {
   const sqlInjectionPatterns = [
     /(\bOR\b|\bAND\b)\s*1\s*=\s*1/gi,
@@ -102,6 +73,35 @@ app.use((req, res, next) => {
 
   next();
 });
+
+// Session configuration (TC17: Session management - Updated to MongoStore.create)
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+      touchAfter: 24 * 3600, // time period in seconds
+    }),
+    cookie: {
+      secure: process.env.NODE_ENV === 'production', // true in production
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      sameSite: 'lax',
+    },
+  })
+);
+
+// Static files
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'views')));
+
+// Routes
+  app.use('/api/auth', authRoutes);
+app.use('/api/voting', votingRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/results', resultsRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -141,7 +141,7 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`
 ╔════════════════════════════════════════╗
-║   🗳️  ONLINE VOTING SYSTEM STARTED    ║
+║    🗳️  ONLINE VOTING SYSTEM STARTED    ║
 ║                                        ║
 ║   Server running on port: ${PORT}
 ║   Environment: ${process.env.NODE_ENV || 'development'}
